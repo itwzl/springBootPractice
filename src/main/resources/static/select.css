@@ -1,0 +1,132 @@
+.first-div {
+    display: inline-block;
+    width: 170px;
+    height: 30px;
+    /*border: 1px solid cadetblue;*/
+    font-size: 20px;
+    margin-left: 150px;
+    margin-top: 50px;
+}
+
+.first-div > select {
+    width: auto;
+    height: 29px;
+    font-size: 17px;
+}
+
+.second-div {
+    display: inline-block;
+    /*border: 1px solid cadetblue;*/
+    width: 230px;
+    height: 30px;
+    font-size: 20px;
+    margin-left: 150px;
+}
+
+.second-div > select {
+    width: auto;
+    height: 27px;
+    font-size: 17px;
+}
+
+.third-div {
+    display: inline-block;
+    /*border: 1px solid cadetblue;*/
+    width: 190px;
+    height: 29px;
+    font-size: 21px;
+    margin-left: 150px;
+}
+
+.third-div > select {
+    width: auto;
+    height: 27px;
+    font-size: 17px;
+}
+
+.forth-div {
+    display: inline-block;
+    /*border: 1px solid cadetblue;*/
+    width: 212px;
+    height: 29px;
+    font-size: 21px;
+    margin-left: 137px;
+}
+
+.forth-div > select {
+    width: auto;
+    height: 27px;
+    font-size: 17px;
+}
+
+.fifth-div {
+    display: inline-block;
+    /*border: 1px solid cadetblue;*/
+    height: 30px;
+    width: 647px;
+    font-size: 21px;
+    margin-left: 150px;
+    margin-top: 30px;
+}
+
+.fifth-div > input {
+    width: auto;
+    height: 27px;
+    font-size: 17px;
+}
+
+.sixth-div {
+    display: inline-block;
+    /*border: 1px solid cadetblue;*/
+    width: 280px;
+    height: 32px;
+    font-size: 21px;
+    margin-left: 57px;
+}
+
+.sixth-div > select {
+    width: auto;
+    height: 26px;
+    font-size: 15px;
+}
+
+.seventh-div {
+    display: inline-block;
+    /*border: 1px solid cadetblue;*/
+    width: 265px;
+    height: 32px;
+    font-size: 21px;
+    margin-left: 47px;
+}
+
+.seventh-div > select {
+    width: 60px;
+    height: 27px;
+    font-size: 17px;
+    margin-left: 3px;
+}
+
+#select-search {
+    display: inline-block;
+    border: 1px solid cadetblue;
+    width: 60px;
+    height: 33px;
+    font-size: 22px;
+    margin-left: 0px;
+}
+
+.list-div {
+    margin-left: 150px;
+    margin-top: 20px;
+    width: 60px;
+    height: 32px;
+    font-size: 22px;
+}
+
+.table-div {
+    transform: translateX(200px);
+}
+
+.table-div tr th {
+    padding-left: 10px;
+}

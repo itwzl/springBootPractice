@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>库房货物出库</title>
+    <style>
+        .div7 {
+            text-align: center;
+        }
+
+        .b1 {
+            letter-spacing: 15px;
+            font-size: 23px;
+        }
+
+        .b3 {
+            letter-spacing: 0px;
+            font-size: 23px;
+        }
+
+        input {
+            width: auto;
+            height: 20px;
+        }
+
+        .ds {
+            width: auto;
+            height: 40px;
+            font-size: 25px;
+            border-radius: 8px;
+            background: dodgerblue;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="div7">
+    <form action="/deleteData" method="get">
+        <b class="b1">编号：</b><input type="text" name="id" id="id-search"><br><br><br>
+        <b class="b3">货物名称：</b><input type="text" name="name" id="name-search"><br><br><br>
+        <b class="b3">出库数量：</b><input type="text" name="number" id="ehn" onblur="judgenumber();"><br><br><br>
+        <input class="ds" type="submit" value="提交">
+    </form>
+</div>
+<script src="/jquery-1.11.3.js"></script>
+<script>
+    function judgenumber() {
+        var id = $('#id-search').val();
+        var name = $('#name-search').val();
+        var url = "/dnumberjudge";
+        $.ajax({
+            type: 'post',
+            url: url,
+            datatype: "json",
+            data: {"id": id, "name": name},
+            success: function (result) {
+                inputnumber = document.getElementById("ehn").value;
+                if (parseInt(inputnumber) > parseInt(result)) {
+                    alert("删除数量大于库存量，请重新输入不超过" + result + "的删除数量");
+                }
+            },
+            error: function () {
+                alert("请求错误")
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

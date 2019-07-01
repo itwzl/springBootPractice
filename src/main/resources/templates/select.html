@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>库房货物查询</title>
+    <link type="text/css" href="/select.css" rel="stylesheet">
+</head>
+<body>
+<div>
+    <div>
+        <form>
+            <div class="first-div">
+                <label>默认查询：</label>
+                <select id="default-search">
+                    <option value=""></option>
+                    <option value="全部">全部</option>
+                </select>
+            </div>
+            <div class="second-div">
+                <label>入库时间查询：</label>
+                <select id="enterhoursetime-search">
+                    <option value=""></option>
+                    <option value="今天">今天</option>
+                    <option value="本周">本周</option>
+                    <option value="本月">本月</option>
+                    <option value="上月">上月</option>
+                    <option value="本年">本年</option>
+                    <option value="上年">上年</option>
+                </select>
+            </div>
+            <div class="third-div">
+                <label>货物类型：</label>
+                <select id="type-search">
+                    <option value=""></option>
+                    <option value="手机">手机</option>
+                    <option value="电脑">电脑</option>
+                    <option value="手表">手表</option>
+                    <option value="电视机">电视机</option>
+                    <option value="游戏机">游戏机</option>
+                </select>
+            </div>
+            <div class="forth-div">
+                <label>厂家：</label>
+                <select id="vender-search">
+                    <option value=""></option>
+                    <option value="华为">华为</option>
+                    <option value="富士康">富士康</option>
+                    <option value="鸿达电子">鸿达电子</option>
+                    <option value="台湾生产基地">台湾生产基地</option>
+                    <option value="中国区TCL厂家">中国区TCL厂家</option>
+                    <option value="夏普生产厂家">夏普生产厂家</option>
+                    <option value="中山市小霸王">中山市小霸王</option>
+                    <option value="海外直邮">海外直邮</option>
+                </select>
+            </div>
+            <div class="fifth-div">
+                <label>查询起始时间：</label>
+                <input type="date" id="enterhoursebegintime-search">
+                <label>查询截止时间：</label>
+                <input type="date" id="enterhourseendtime-search">
+            </div>
+            <div class="sixth-div">
+                <label>货物名称：</label>
+                <select id="name-search">
+                    <option value=""></option>
+                    <option value="iphone XS">iphone XS</option>
+                    <option value="ASUS ZM597">ASUS ZM597</option>
+                    <option value="HUAWEI Watch2 pro">HUAWEI Watch2 pro</option>
+                    <option value="iPhone X">iPhone X</option>
+                    X
+                    <option value="iphone xs plus">iphone xs plus</option>
+                    <option value="TCL C7">TCL C7</option>
+                    <option value="夏普LCD-60SU470A">夏普LCD-60SU470A</option>
+                    <option value="小霸王PSP S3000A">小霸王PSP S3000A</option>
+                    <option value="任天堂Switch">任天堂Switch</option>
+                </select>
+            </div>
+            <div class="seventh-div">
+                <label>库房号：</label>
+                <select id="hoursenumber-search">
+                    <option value=""></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+            </div>
+            <button id="select-search" type="button" onclick="search();">查询</button>
+        </form>
+    </div>
+    <div class="lt-div">
+        <div class="list-div">列表</div>
+        <div class="table-div">
+            <table style="font-size: 20px;" border="1">
+                <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>货物名称</th>
+                    <th>货物类型</th>
+                    <th>货物单价</th>
+                    <th>货物总价</th>
+                    <th>厂家</th>
+                    <th>生产日期</th>
+                    <th>进货负责人</th>
+                    <th>颜色</th>
+                    <th>数量</th>
+                    <th>入库时间</th>
+                    <th>入库人</th>
+                    <th>库房号</th>
+                </tr>
+                </thead>
+                <tbody id="table">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="/jquery-1.11.3.js"></script>
+.
+<script>
+    $(document).ready(function () {
+        // 在这里写你的代码...
+        list1();
+    });
+
+    function list() {
+        var defaultselect = $('#default-search').val();
+        var enterhoursetime = $('#enterhoursetime-search').val();
+        var type = $('#type-search').val();
+        var vender = $('#vender-search').val();
+        var enterhoursebegintime = $('#enterhoursebegintime-search').val();
+        var enterhourseendtime = $('#enterhourseendtime-search').val();
+        var name = $('#name-search').val();
+        var hoursenumber = $('#hoursenumber-search').val();
+        var url = "/selectData";
+        $.ajax({
+            type: 'post',
+            url: url,
+            datatype: "json",
+            data: {
+                "defaultselect": defaultselect,
+                "enterhoursetime": enterhoursetime,
+                "type": type,
+                "vender": vender,
+                "enterhoursebegintime": enterhoursebegintime,
+                "enterhourseendtime": enterhourseendtime,
+                "name": name,
+                "hoursenumber": hoursenumber
+            },
+            success: function (result) {
+                $("#table").children().remove();
+                if (result.data.length > 0) {
+                    var html = "";
+                    console.log(result);
+                    console.log(result.data);
+                    console.log(result.data.length);
+                    $.each(result.data, function (i, item) {
+                        var strDate1 = dategeshi(item.producedata);
+                        var strDate2 = dategeshi(item.enterhoursetime);
+                        html = html + "<tr>"
+                            + "<td>" + item.id + "</td>"
+                            + "<td>" + item.name + "</td>"
+                            + "<td>" + item.type + "</td>"
+                            + "<td>" + item.unitprice + "</td>"
+                            + "<td>" + item.totalprice + "</td>"
+                            + "<td>" + item.vender + "</td>"
+                            + "<td>" + strDate1 + "</td>"
+                            + "<td>" + item.buyperson + "</td>"
+                            + "<td>" + item.color + "</td>"
+                            + "<td>" + item.number + "</td>"
+                            + "<td>" + strDate2 + "</td>"
+                            + "<td>" + item.enterhourseperson + "</td>"
+                            + "<td>" + item.hoursenumber + "</td>"
+                            + "</tr>";
+                    });
+                    $("#table").append(html);
+                }
+            },
+            error: function () {
+                alert("请求错误");
+            }
+        });
+    }
+
+    function list1() {
+        var defaultselect = $('#default-search').val();
+        var enterhoursetime = "";
+        var type = "";
+        var vender = "";
+        var enterhoursebegintime = "";
+        var enterhourseendtime = "";
+        var name = "";
+        var hoursenumber = "";
+        var url = "/selectData";
+        $.ajax({
+            type: 'post',
+            url: url,
+            datatype: "json",
+            data: {
+                "defaultselect": defaultselect,
+                "enterhoursetime": enterhoursetime,
+                "type": type,
+                "vender": vender,
+                "enterhoursebegintime": enterhoursebegintime,
+                "enterhourseendtime": enterhourseendtime,
+                "name": name,
+                "hoursenumber": hoursenumber
+            },
+            success: function (result) {
+                $("#table").children().remove();
+                if (result.data.length > 0) {
+                    var html = "";
+                    // console.log(result);
+                    $.each(result.data, function (i, item) {
+                        var strDate1 = dategeshi(item.producedata);
+                        var strDate2 = dategeshi(item.enterhoursetime);
+                        html = html + "<tr>"
+                            + "<td>" + item.id + "</td>>"
+                            + "<td>" + item.name + "</td>>"
+                            + "<td>" + item.type + "</td>>"
+                            + "<td>" + item.unitprice + "</td>>"
+                            + "<td>" + item.totalprice + "</td>>"
+                            + "<td>" + item.vender + "</td>>"
+                            + "<td>" + strDate1 + "</td>>"
+                            + "<td>" + item.buyperson + "</td>>"
+                            + "<td>" + item.color + "</td>>"
+                            + "<td>" + item.number + "</td>>"
+                            + "<td>" + strDate2 + "</td>>"
+                            + "<td>" + item.enterhourseperson + "</td>>"
+                            + "<td>" + item.hoursenumber + "</td>>"
+                            + "</tr>";
+                    });
+                    $("#table").append(html);
+                }
+            },
+            error: function () {
+                alert("请求错误");
+            }
+        });
+    }
+
+    function search() {
+        list();
+    }
+
+    function dategeshi(a) {
+        var date = new Date(a);
+        var month = date.getMonth() + 1;
+        if (month < 10) {
+            month = "0" + month;
+        }
+        var day = date.getDate();
+        if (day < 10) {
+            day = "0" + day;
+        }
+        var geshiDate = date.getFullYear() + "-" + month + "-" + day;
+        return geshiDate;
+    }
+
+</script>
+</body>
+</html>

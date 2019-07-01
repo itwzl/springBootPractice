@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>库房货物入库</title>
+    <style type="text/css">
+        .b1 {
+            letter-spacing: 29px;
+            margin-right: 26px;
+            margin-top: 20px;
+            font-size: 22px;
+        }
+
+        .b2 {
+            letter-spacing: 14px;
+            margin-right: 38px;
+            margin-top: 50px;
+            font-size: 22px;
+        }
+
+        .b3 {
+            letter-spacing: 5px;
+            margin-right: 46px;
+            font-size: 22px;
+        }
+
+        .b4 {
+            margin-right: 50px;
+            font-size: 22px;
+        }
+
+        .div6 {
+            text-align: center;
+        }
+
+        .s1 {
+            width: auto;
+            height: 40px;
+            font-size: 25px;
+            border-width: 0px; /* 边框宽度 */
+            border-radius: 8px; /* 边框半径 */
+            background: dodgerblue; /* 背景颜色 */
+            cursor: pointer; /* 鼠标移入按钮范围时出现手势 */
+            outline: none; /* 不显示轮廓线 */
+            font-family: Microsoft YaHei; /* 设置字体 */
+            color: black; /* 字体颜色 */
+        }
+
+        input {
+            width: 173px;
+            height: 22px;
+        }
+    </style>
+</head>
+<body>
+<div class="div6">
+    <div>
+        <h1>库房货物入库</h1>
+    </div>
+    <div>
+        <form action="/saveData" method="post">
+            <b class="b1">编号：</b><input type="text" name="id"><br><br>
+            <b class="b3">货物名称：</b><input type="text" name="name"><br><br>
+            <b class="b3">货物类型：</b><input type="text" name="type"><br><br>
+            <b class="b3">货物单价：</b><input type="text" name="unitprice" id="unitprice-search"><br><br>
+            <b class="b1">数量：</b><input type="text" name="number" id="number-search"><br><br>
+            <b class="b3">货物总价：</b><input type="text" name="totalprice" id="totalprice-search"
+                                          onclick="gettotalprice();"><br><br>
+            <b class="b1">厂家：</b><input type="text" name="vender"><br><br>
+            <b class="b3">生产日期：</b><input type="date" name="producedata"><br><br>
+            <b class="b4">进货负责人：</b><input type="text" name="buyperson"><br><br>
+            <b class="b1">颜色：</b><input type="text" name="color"><br><br>
+            <b class="b3">入库时间：</b><input type="text" name="enterhoursetime" id="enterhoursetime-search"
+                                          onclick="getenterhoursetime();"><br><br>
+            <b class="b2">入库人：</b><input type="text" name="enterhourseperson"><br><br>
+            <b class="b2">库房号：</b><input type="text" name="hoursenumber"><br><br><br>
+            <input class="s1" type="submit" value="提交">
+        </form>
+    </div>
+</div>
+<script src="/jquery-1.11.3.js"></script>
+<script>
+    function totalprice() {
+        var unitprice = $('#unitprice-search').val();
+        var number = $('#number-search').val();
+        var url = "/autoGetTotalprice";
+        $.ajax({
+            type: 'post',
+            url: url,
+            datatype: "json",
+            data: {"unitprice": unitprice, "number": number},
+            success: function (result) {
+                document.getElementById("totalprice-search").value = result;
+            },
+            error: function () {
+                alert("请求错误")
+            }
+        });
+    }
+
+    function gettotalprice() {
+        totalprice();
+    }
+
+    function getenterhoursetime() {
+        var url = "/autoGetEnterhoursetime";
+        $.ajax({
+            type: 'post',
+            url: url,
+            datatype: "json",
+            data: {},
+            success: function (result) {
+                document.getElementById("enterhoursetime-search").value = result;
+            },
+            error: function () {
+                alert("请求错误")
+            }
+        });
+    }
+
+
+</script>
+</body>
+</html>
